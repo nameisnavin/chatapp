@@ -1,4 +1,8 @@
 import streamlit as st
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings, HuggingFaceInstructEmbeddings
@@ -7,9 +11,18 @@ from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from htmlTemplates import css, bot_template, user_template
-import os
 
-os.environ["OPENAI_API_KEY"] = "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"
+
+load_dotenv(".env")
+
+api_key=os.getenv("API_KEY")
+api_secret=os.getenv("API_SECRET")
+
+
+os.environ[api_key] = api_secret
+
+print("API_KEY", api_key)
+print("API_SECRET",api_secret)
 
 
 def get_pdf_text(pdf_docs):
